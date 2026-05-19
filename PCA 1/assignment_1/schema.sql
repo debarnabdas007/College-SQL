@@ -1,0 +1,57 @@
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE DEPARTMENT (
+    Dname VARCHAR(15) NOT NULL,
+    Dnumber INT PRIMARY KEY
+);
+
+CREATE TABLE EMPLOYEE (
+    Fname VARCHAR(15),
+    Lname VARCHAR(15),
+    Ssn CHAR(9) PRIMARY KEY,
+    Dno INT DEFAULT 1,
+    FOREIGN KEY (Dno) REFERENCES DEPARTMENT(Dnumber) 
+        ON DELETE SET DEFAULT 
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE PROJECT (
+    Pname VARCHAR(15),
+    Pnumber INT PRIMARY KEY,
+    Dnum INT DEFAULT 1,
+    FOREIGN KEY (Dnum) REFERENCES DEPARTMENT(Dnumber) 
+        ON DELETE SET DEFAULT 
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE WORKS_ON (
+    Essn CHAR(9) DEFAULT '000000000',
+    Pno INT DEFAULT 1,
+    Hours DECIMAL(3,1),
+    PRIMARY KEY (Essn, Pno),
+    FOREIGN KEY (Essn) REFERENCES EMPLOYEE(Ssn) 
+        ON DELETE SET DEFAULT 
+        ON UPDATE CASCADE,
+    FOREIGN KEY (Pno) REFERENCES PROJECT(Pnumber) 
+        ON DELETE SET DEFAULT 
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE DEPENDENT (
+    Essn CHAR(9) DEFAULT '000000000',
+    Dependent_name VARCHAR(15),
+    PRIMARY KEY (Essn, Dependent_name),
+    FOREIGN KEY (Essn) REFERENCES EMPLOYEE(Ssn) 
+        ON DELETE SET DEFAULT 
+        ON UPDATE CASCADE
+);
+
+-- Insert Fallback Data
+INSERT INTO DEPARTMENT (Dname, Dnumber) VALUES ('Default Bench', 1);
+INSERT INTO EMPLOYEE (Fname, Lname, Ssn, Dno) VALUES ('Default', 'Emp', '000000000', 1);
+
+-- Insert Actual Data
+INSERT INTO DEPARTMENT (Dname, Dnumber) VALUES ('IT', 10), ('HR', 20);
+INSERT INTO EMPLOYEE (Fname, Lname, Ssn, Dno) VALUES 
+('Alice', 'Zane', '111111111', 10),
+('Bob', 'Vance', '222222222', 20);

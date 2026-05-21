@@ -1,6 +1,27 @@
 USE Assignment8DB;
 
 -- =====================================================
+-- RESET DATA
+-- =====================================================
+
+DELETE FROM accounts;
+
+INSERT INTO accounts VALUES
+(1, 'Rahul', 5000),
+(2, 'Ananya', 7000);
+
+DELETE FROM Customers;
+
+INSERT INTO Customers VALUES
+(1, 'Raj', 'Texas'),
+(2, 'Priya', 'Florida'),
+(3, 'Amit', 'Delhi');
+
+SELECT * FROM accounts;
+SELECT * FROM Customers;
+
+
+-- =====================================================
 -- 1. TRANSACTION WITH COMMIT
 -- =====================================================
 
@@ -20,12 +41,8 @@ SELECT * FROM accounts;
 
 
 -- =====================================================
--- 2. DELETE + COMMIT + ROLLBACK
+-- 2. DELETE + ROLLBACK
 -- =====================================================
-
--- -------------------------------------
--- ROLLBACK EXAMPLE
--- -------------------------------------
 
 START TRANSACTION;
 
@@ -39,9 +56,9 @@ ROLLBACK;
 SELECT * FROM Customers;
 
 
--- -------------------------------------
--- COMMIT EXAMPLE
--- -------------------------------------
+-- =====================================================
+-- 3. DELETE + COMMIT
+-- =====================================================
 
 START TRANSACTION;
 
@@ -54,7 +71,21 @@ SELECT * FROM Customers;
 
 
 -- =====================================================
--- 3. SAVEPOINT
+-- RESET CUSTOMER DATA AGAIN
+-- =====================================================
+
+DELETE FROM Customers;
+
+INSERT INTO Customers VALUES
+(1, 'Raj', 'Texas'),
+(2, 'Priya', 'Florida'),
+(3, 'Amit', 'Delhi');
+
+SELECT * FROM Customers;
+
+
+-- =====================================================
+-- 4. SAVEPOINT
 -- =====================================================
 
 START TRANSACTION;

@@ -4,6 +4,11 @@ USE Assignment6DB;
 -- 1. BEFORE INSERT Trigger on EMPLOYEE
 -- =====================================================
 
+DROP TRIGGER IF EXISTS trg_salary_check;
+
+DELETE FROM EMPLOYEE
+WHERE EMP_ID = 4;
+
 DELIMITER //
 
 CREATE TRIGGER trg_salary_check
@@ -19,6 +24,8 @@ END //
 
 DELIMITER ;
 
+SHOW TRIGGERS;
+
 INSERT INTO EMPLOYEE VALUES (4, 'Riya', 3000);
 
 SELECT * FROM EMPLOYEE;
@@ -27,6 +34,14 @@ SELECT * FROM EMPLOYEE;
 -- =====================================================
 -- 2. AFTER INSERT Trigger for AUDIT_EMPLOYEE
 -- =====================================================
+
+DROP TRIGGER IF EXISTS trg_employee_audit;
+
+DELETE FROM EMPLOYEE
+WHERE EMP_ID = 5;
+
+DELETE FROM AUDIT_EMPLOYEE
+WHERE EMP_ID = 5;
 
 DELIMITER //
 
@@ -55,6 +70,8 @@ SELECT * FROM AUDIT_EMPLOYEE;
 -- 3. BEFORE DELETE Trigger on STUDENT
 -- =====================================================
 
+DROP TRIGGER IF EXISTS trg_prevent_delete;
+
 DELIMITER //
 
 CREATE TRIGGER trg_prevent_delete
@@ -72,12 +89,19 @@ END //
 DELIMITER ;
 
 -- Test
-DELETE FROM STUDENT WHERE STUD_ID = 1;
+DELETE FROM STUDENT
+WHERE STUD_ID = 1;
 
+SELECT * FROM STUDENT;
 
 -- =====================================================
 -- 4. AFTER UPDATE Trigger for SALARY_LOG
 -- =====================================================
+
+DROP TRIGGER IF EXISTS trg_salary_update;
+
+DELETE FROM SALARY_LOG
+WHERE EMP_ID = 1;
 
 DELIMITER //
 
@@ -103,11 +127,14 @@ SET SALARY = 40000
 WHERE EMP_ID = 1;
 
 SELECT * FROM SALARY_LOG;
+SELECT * FROM EMPLOYEE;
 
 
 -- =====================================================
 -- 5. BEFORE UPDATE Trigger for Salary Increase Limit
 -- =====================================================
+
+DROP TRIGGER IF EXISTS trg_salary_limit;
 
 DELIMITER //
 
@@ -137,6 +164,11 @@ WHERE EMP_ID = 2;
 -- 6. AFTER DELETE Trigger on CUSTOMER
 -- =====================================================
 
+DROP TRIGGER IF EXISTS trg_customer_backup;
+
+DELETE FROM CUSTOMER_BACKUP
+WHERE CUST_ID = 1;
+
 DELIMITER //
 
 CREATE TRIGGER trg_customer_backup
@@ -165,6 +197,11 @@ SELECT * FROM CUSTOMER_BACKUP;
 -- 7. BEFORE INSERT Trigger on ATTENDANCE
 -- =====================================================
 
+DROP TRIGGER IF EXISTS trg_attendance_status;
+
+DELETE FROM ATTENDANCE
+WHERE ATT_ID = 1;
+
 DELIMITER //
 
 CREATE TRIGGER trg_attendance_status
@@ -190,6 +227,14 @@ SELECT * FROM ATTENDANCE;
 -- 8. AFTER INSERT Trigger on STUDENT
 -- =====================================================
 
+DROP TRIGGER IF EXISTS trg_student_count;
+
+DELETE FROM STUDENT
+WHERE STUD_ID = 10;
+
+UPDATE DEPARTMENT
+SET STUDENT_COUNT = 0;
+
 DELIMITER //
 
 CREATE TRIGGER trg_student_count
@@ -214,6 +259,8 @@ SELECT * FROM DEPARTMENT;
 -- =====================================================
 -- 9. BEFORE INSERT Trigger for Age Validation
 -- =====================================================
+
+DROP TRIGGER IF EXISTS trg_age_validation;
 
 DELIMITER //
 
@@ -241,6 +288,10 @@ VALUES (11, 'Rohit', 70, 15, 102);
 -- =====================================================
 -- 10. AFTER UPDATE Trigger on DEPARTMENT
 -- =====================================================
+
+DROP TRIGGER IF EXISTS trg_department_log;
+
+DELETE FROM DEPARTMENT_LOG;
 
 DELIMITER //
 

@@ -28,11 +28,11 @@ SELECT * FROM Customers;
 START TRANSACTION;
 
 UPDATE accounts
-SET balance = balance - 500
+SET balance = balance - 600
 WHERE account_id = 1;
 
 UPDATE accounts
-SET balance = balance + 500
+SET balance = balance + 600
 WHERE account_id = 2;
 
 COMMIT;
